@@ -3,20 +3,20 @@
 Plugin Name:  WP eBay Product Feeds
 Plugin URI:   https://www.winwar.co.uk/plugins/ebay-feeds-wordpress/?utm_source=plugin-link&utm_medium=plugin&utm_campaign=ebayfeedsforwordpress
 Description:  Former eBay Feeds for WordPress. Parser of ebay RSS feeds to display on WordPress posts, widgets and pages.
-Version:      3.4.6
+Version:      3.4.8
 Author:       Winwar Media
 Author URI:   https://www.winwar.co.uk/?utm_source=author-link&utm_medium=plugin&utm_campaign=ebayfeedsforwordpress
 Text Domain:  ebay-feeds-for-wordpress
 */
 
-define( "EBFW_PLUGIN_VERSION", "3.4.6" );
+define( "EBFW_PLUGIN_VERSION", "3.4.8" );
 
 define( 'EBAYFEEDSFORWORDPRESS_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'EBAYFEEDSFORWORDPRESS_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 
 
 define( "EBFW_PLUGIN_NAME", "WP eBay Product Feeds" );
-define( "EBFW_PLUGIN_TAGLINE", __( "Former eBay Feeds for WordPress. Parser of ebay RSS feeds to display on WordPress posts, widgets and pages.", "ebay-feeds-for-wordpress" ) );
+
 define( "EBFW_PLUGIN_URL", "https://winwar.co.uk/plugins/ebay-feeds-wordpress/" );
 define( "EBFW_EXTEND_URL", "https://wordpress.org/extend/plugins/ebay-feeds-for-wordpress/" );
 define( "EBFW_AUTHOR_TWITTER", "rhyswynne" );
@@ -32,7 +32,7 @@ require_once( EBAYFEEDSFORWORDPRESS_PLUGIN_PATH . '/inc/core.php' );
 function ebay_feeds_for_wordpress_initialise_plugin() {
 	// non-admin functions
 	add_action( 'init', 'ebay_feeds_for_wordpress_addbuttons', 10 );
-	add_action( 'plugins_loaded', 'ebay_feeds_for_wordpress_textdomain' );
+	add_action( 'init', 'ebay_feeds_for_wordpress_textdomain' );
 	add_action( 'plugins_loaded', 'ebay_feeds_for_wordpress_check_for_gutenberg', 50 );
 	add_action( 'plugins_loaded', 'ebay_feeds_for_wordpress_add_shortcode', 10 );
 	add_action( 'wp_head', 'ebayfeedsforwordpress_set_max_image_width' );
@@ -109,6 +109,10 @@ function ebay_feeds_for_wordpress_install() {
  * @return void
  */
 function ebay_feeds_for_wordpress_textdomain() {
+
+	// As we translate this string, we have to call this after Init
+	define( "EBFW_PLUGIN_TAGLINE", __( "Former eBay Feeds for WordPress. Parser of ebay RSS feeds to display on WordPress posts, widgets and pages.", "ebay-feeds-for-wordpress" ) );
+	
 	$plugin_dir = basename( dirname( __FILE__ ) );
 	load_plugin_textdomain( 'ebay-feeds-for-wordpress', false, $plugin_dir .'/languages' );
 }
